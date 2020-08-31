@@ -15,6 +15,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: prepare-gcloud
+      - run: gcloud auth configure-docker
       - *docker_build_and_push
   deploy:
     docker:
