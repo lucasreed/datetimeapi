@@ -10,7 +10,7 @@ references:
 jobs:
   docker_build_and_push:
     docker:
-      - image: quay.io/reactiveops/ci-images:v9.4-alpine:v11-alpine
+      - image: quay.io/reactiveops/ci-images:v11-alpine
     steps:
       - checkout
       - setup_remote_docker
@@ -18,7 +18,7 @@ jobs:
       - *docker_build_and_push
   deploy:
     docker:
-      - image: quay.io/reactiveops/ci-images:v9.4-alpine:v11-alpine
+      - image: quay.io/reactiveops/ci-images:v11-alpine
     steps:
       - checkout
       - run: prepare-gcloud
