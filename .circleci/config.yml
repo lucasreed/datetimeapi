@@ -30,7 +30,15 @@ workflows:
           filters:
             branches:
               only: master
-      - deploy:
+    deploy_to_kube:
+      jobs:
+        build_and_push:
+          filters:
+            tags:
+              only: /v.*/
+        deploy:
+          requires:
+            - build_and_push
           filters:
             branches:
               ignore: /.*/
