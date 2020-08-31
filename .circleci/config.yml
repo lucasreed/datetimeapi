@@ -33,6 +33,6 @@ workflows:
       - deploy:
           filters:
             branches:
-              ignore: /*/
+              ignore: /.*/
             tags:
               only: /v.*/
