@@ -38,7 +38,7 @@ workflows:
               only: /v.*/
       - deploy:
           requires:
-            - build_and_push
+            - docker_build_and_push
           filters:
             branches:
               ignore: /.*/
