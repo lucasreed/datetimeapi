@@ -1,0 +1,38 @@
+version: 2.1
+references:
+  docker_build_and_push: &docker_build_and_push
+    run:
+      name: build and push
+      command: |
+        docker-pull -f .circleci/build.config
+        docker-build -f .circleci/build.config
+        docker-push -f .circleci/build.config
+jobs:
+  docker_build_and_push:
+    docker:
+      - image: quay.io/reactiveops/ci-images:v9.4-alpine:v11-alpine
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: prepare-gcloud
+      - *docker_build_and_push
+  deploy:
+    docker:
+      - image: quay.io/reactiveops/ci-images:v9.4-alpine:v11-alpine
+    steps:
+      - checkout
+      - run: prepare-gcloud
+      - run: helm-deploy -f deploy/prod.config
+workflows:
+  build_and_push:
+    jobs:
+      - docker_build_and_push:
+          filters:
+            branches:
+              only: master
+      - deploy:
+          filters:
+            branches:
+              ignore: /*/
+            tags:
+              only: /v.*/
