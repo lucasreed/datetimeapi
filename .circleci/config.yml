@@ -32,7 +32,7 @@ workflows:
               only: master
   deploy_to_kube:
     jobs:
-      - build_and_push:
+      - docker_build_and_push:
           filters:
             tags:
               only: /v.*/
