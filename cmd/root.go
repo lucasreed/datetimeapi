@@ -70,7 +70,8 @@ func Execute(VERSION string) {
 
 func start() {
 	router := mux.NewRouter().StrictSlash(true)
-	router.HandleFunc("/", getRoot)
+	router.HandleFunc("/", getRoot).Methods("GET")
+	log.Println("Starting server.")
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), router))
 }
 
@@ -83,6 +84,7 @@ func getVersion() string {
 }
 
 func getRoot(w http.ResponseWriter, r *http.Request) {
+	log.Printf("%s request made to '/' from %s", r.Method, r.RemoteAddr)
 	ret := DateTimeReturn{
 		DateTime:   getUnixTime(),
 		AppVersion: getVersion(),
