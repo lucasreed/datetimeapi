@@ -34,6 +34,8 @@ workflows:
     jobs:
       - docker_build_and_push:
           filters:
+            branches:
+              ignore: /.*/
             tags:
               only: /v.*/
       - deploy:
